@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Piece 3
       objectReference: {fileID: 0}
+    - target: {fileID: 536545220439448881, guid: aff920808404ebe4cb0909577296e0a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.65
+      objectReference: {fileID: 0}
     - target: {fileID: 1773832343559325254, guid: aff920808404ebe4cb0909577296e0a3, type: 3}
       propertyPath: m_Size.y
       value: 12
@@ -551,6 +555,14 @@ PrefabInstance:
     - target: {fileID: 4230569441430052571, guid: aff920808404ebe4cb0909577296e0a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307594203463641773, guid: aff920808404ebe4cb0909577296e0a3, type: 3}
+      propertyPath: size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343840656536083586, guid: aff920808404ebe4cb0909577296e0a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.74
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

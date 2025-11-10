@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI; //Activa el codigo de la UI
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
 
-    public int velocidad;
+    public static float velocidad;
+    public int puntos;
+    public TMP_Text marcadorpuntos;
     private Rigidbody2D rb;
 
     //[RequireComponent(typeof(Rigidbody2D))]
@@ -14,6 +19,8 @@ public class Player : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         velocidad = 3;
+        puntos = 0;
+        
 
     }
 
@@ -31,7 +38,7 @@ public class Player : MonoBehaviour
 
         rb.linearVelocity = new Vector2(Input.GetAxisRaw("Horizontal") * velocidad, rb.linearVelocity.y);
 
-
+        marcadorpuntos.text = "Points: " + puntos;
 
     }
 
@@ -40,8 +47,34 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Damage"))
         {
-            Destroy(gameObject);
+            Player.velocidad = (velocidad * 0);
+            Invoke("gameover", 1);
+            //Destroy(gameObject);
         }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Puntos"))
+        {
+
+            Player.velocidad = (float)(velocidad + 0.2);
+            print(velocidad);
+            puntos = puntos + 1;
+            
+
+        }
+
+    }
+
+
+
+    void gameover()
+    {
+
+        SceneManager.LoadScene(0);
 
     }
 

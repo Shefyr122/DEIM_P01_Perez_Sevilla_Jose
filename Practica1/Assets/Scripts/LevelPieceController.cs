@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class LevelPieceController : MonoBehaviour
 {
-    public int velocidad;
+    
+    public float size;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
-        velocidad = 4;
+        
 
     }
 
@@ -16,7 +17,7 @@ public class LevelPieceController : MonoBehaviour
     void Update()
     {
 
-        transform.Translate(0, velocidad * Time.deltaTime, 0);
+        transform.Translate(0, Player.velocidad * Time.deltaTime, 0);
 
     }
 
@@ -32,7 +33,7 @@ public class LevelPieceController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Respawn"))
         {
 
-            LevelGenerator.AddNewPiece();
+            LevelGenerator.AddNewPiece(transform.position - new Vector3 (0, size, 0));
             
 
         }
