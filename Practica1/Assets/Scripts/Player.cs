@@ -7,8 +7,10 @@ public class Player : MonoBehaviour
 {
 
     public static float velocidad;
+    public int score;
     public int puntos;
     public TMP_Text marcadorpuntos;
+    public TMP_Text marcadorrecord;
     private Rigidbody2D rb;
 
     //[RequireComponent(typeof(Rigidbody2D))]
@@ -20,7 +22,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         velocidad = 3;
         puntos = 0;
-        
 
     }
 
@@ -36,9 +37,23 @@ public class Player : MonoBehaviour
 
         */
 
+        if (Input.touchCount > 0)
+        {
+            float touchSceenPosition = Input.touches[0].position.x;
+            float screenCenter = Screen.width / 2;
+            if (touchSceenPosition > screenCenter)
+            {
+
+            }
+
+
+        }
+
+
         rb.linearVelocity = new Vector2(Input.GetAxisRaw("Horizontal") * velocidad, rb.linearVelocity.y);
 
         marcadorpuntos.text = "Points: " + puntos;
+        marcadorrecord.text = "Record: " + PlayerPrefs.GetInt("score");
 
     }
 
@@ -48,6 +63,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Damage"))
         {
             Player.velocidad = (velocidad * 0);
+            Invoke("SaveScore", 0);
             Invoke("gameover", 1);
             //Destroy(gameObject);
         }
@@ -61,8 +77,7 @@ public class Player : MonoBehaviour
         {
 
             Player.velocidad = (float)(velocidad + 0.2);
-            print(velocidad);
-            puntos = puntos + 1;
+            puntos++;
             
 
         }
@@ -74,7 +89,20 @@ public class Player : MonoBehaviour
     void gameover()
     {
 
+        
+
         SceneManager.LoadScene(0);
+
+    }
+
+
+    void SaveScore()
+    {
+
+        if(puntos >= PlayerPrefs.GetInt("score"))
+        {
+            PlayerPrefs.SetInt("score", puntos);
+        }
 
     }
 
