@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI; //Activa el codigo de la UI
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -28,29 +29,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //FingerMovement();
+        ScreenBordersMovement();
+
+
+
+        //rb.linearVelocity = new Vector2(Input.GetAxisRaw("Horizontal") * velocidad, rb.linearVelocity.y);
         /*if (Input.GetKey(KeyCode.A));
-        {
+    {
 
-            transform.Translate(-velocidad * Time.deltaTime,0,0);
+        transform.Translate(-velocidad * Time.deltaTime,0,0);
 
-        }
+    }
 
-        */
-
-        if (Input.touchCount > 0)
-        {
-            float touchSceenPosition = Input.touches[0].position.x;
-            float screenCenter = Screen.width / 2;
-            if (touchSceenPosition > screenCenter)
-            {
-
-            }
-
-
-        }
-
-
-        rb.linearVelocity = new Vector2(Input.GetAxisRaw("Horizontal") * velocidad, rb.linearVelocity.y);
+    */
 
         marcadorpuntos.text = "Points: " + puntos;
         marcadorrecord.text = "Record: " + PlayerPrefs.GetInt("score");
@@ -89,8 +81,6 @@ public class Player : MonoBehaviour
     void gameover()
     {
 
-        
-
         SceneManager.LoadScene(0);
 
     }
@@ -104,6 +94,44 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt("score", puntos);
         }
 
+    }
+
+    private void FingerMovement()
+    {
+        if (Input.touchCount > 0) //Comprueba si se toca la pantalla
+        {
+            float fingerMovementX = Input.touches[0].deltaPosition.x;
+            //transform.Translate(fingerMovementX * SpeedTreeWindAsset * Time.deltaTime, 0, 0);
+            rb.linearVelocityX = fingerMovementX*velocidad;
+
+        }
+        else
+        {
+            rb.linearVelocityX = 0;
+        }
+    }
+
+    private void ScreenBordersMovement()
+    {
+        if (Input.touchCount > 0)
+        {
+            float touchSceenPosition = Input.touches[0].position.x;
+            float screenCenter = Screen.width / 2;
+            if (touchSceenPosition > screenCenter)
+            {
+                rb.linearVelocityX = velocidad;
+            }
+            else
+            {
+                rb.linearVelocityX = -velocidad;
+            }
+
+
+        }
+        else
+        {
+            rb.linearVelocityX = 0;
+        }
     }
 
 }
