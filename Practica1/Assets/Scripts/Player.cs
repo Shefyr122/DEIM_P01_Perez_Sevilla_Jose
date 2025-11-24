@@ -14,6 +14,13 @@ public class Player : MonoBehaviour
     public TMP_Text marcadorrecord;
     private Rigidbody2D rb;
 
+    public ParticleSystem particle1;
+    public ParticleSystem particle2;
+
+    public GameObject Snow;
+    public GameObject SnowL;
+    public GameObject SnowR;
+
     //[RequireComponent(typeof(Rigidbody2D))]
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,7 +39,12 @@ public class Player : MonoBehaviour
         //FingerMovement();
         ScreenBordersMovement();
 
+        //Cambia la Simulation speed de las particulas a la del jugador
+        ParticleSystem.MainModule mainModule1 = particle1.main;
+        mainModule1.simulationSpeed = velocidad;
 
+        ParticleSystem.MainModule mainModule2 = particle2.main;
+        mainModule2.simulationSpeed = velocidad;
 
         //rb.linearVelocity = new Vector2(Input.GetAxisRaw("Horizontal") * velocidad, rb.linearVelocity.y);
         /*if (Input.GetKey(KeyCode.A));
@@ -120,10 +132,17 @@ public class Player : MonoBehaviour
             if (touchSceenPosition > screenCenter)
             {
                 rb.linearVelocityX = velocidad;
+                Snow.SetActive(false);
+                SnowR.SetActive(false);
+                SnowL.SetActive(true);
+
             }
             else
             {
                 rb.linearVelocityX = -velocidad;
+                Snow.SetActive(false);
+                SnowR.SetActive(true);
+                SnowL.SetActive(false);
             }
 
 
@@ -131,6 +150,9 @@ public class Player : MonoBehaviour
         else
         {
             rb.linearVelocityX = 0;
+            Snow.SetActive(true);
+            SnowR.SetActive(false);
+            SnowL.SetActive(false);
         }
     }
 

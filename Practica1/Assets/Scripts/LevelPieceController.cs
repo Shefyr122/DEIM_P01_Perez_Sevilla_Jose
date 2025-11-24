@@ -30,7 +30,7 @@ public class LevelPieceController : MonoBehaviour
             Destroy(gameObject);
 
         }
-        else if (collision.gameObject.CompareTag("Respawn"))
+        if (collision.gameObject.CompareTag("Respawn"))
         {
 
             LevelGenerator.AddNewPiece(transform.position - new Vector3 (0, size, 0));
