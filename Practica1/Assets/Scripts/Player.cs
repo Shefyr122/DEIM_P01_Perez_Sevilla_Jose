@@ -3,6 +3,8 @@ using UnityEngine.UI; //Activa el codigo de la UI
 using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using DG.Tweening;
+
 
 public class Player : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class Player : MonoBehaviour
     public GameObject Snow;
     public GameObject SnowL;
     public GameObject SnowR;
+
+    
 
     //[RequireComponent(typeof(Rigidbody2D))]
 
@@ -66,6 +70,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Damage"))
         {
+            
             Player.velocidad = (velocidad * 0);
             Invoke("SaveScore", 0);
             Invoke("gameover", 1);
@@ -80,6 +85,9 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Puntos"))
         {
 
+            marcadorpuntos.DOColor(Color.lightYellow, 1).OnComplete(() => {
+                marcadorpuntos.DOColor(Color.black, 1);
+            });
             Player.velocidad = (float)(velocidad + 0.2);
             puntos++;
             
