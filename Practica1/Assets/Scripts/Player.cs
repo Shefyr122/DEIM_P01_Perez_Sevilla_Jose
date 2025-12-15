@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     public TMP_Text marcadorpuntos;
     public TMP_Text marcadorrecord;
     private Rigidbody2D rb;
+    public BoxCollider2D box;
+    public int salto;
+    private bool saltando;
 
     public ParticleSystem particle1;
     public ParticleSystem particle2;
@@ -22,8 +25,13 @@ public class Player : MonoBehaviour
     public GameObject Snow;
     public GameObject SnowL;
     public GameObject SnowR;
+    public GameObject SnowTrailL;
+    public GameObject SnowTrailR;
+    public Transform sombra;
 
-    
+    public Transform prota;
+
+
 
     //[RequireComponent(typeof(Rigidbody2D))]
 
@@ -34,6 +42,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         velocidad = 3;
         puntos = 0;
+        saltando = false;
 
     }
 
@@ -94,7 +103,43 @@ public class Player : MonoBehaviour
 
         }
 
+        if (collision.gameObject.CompareTag("Salto"))
+        {
+            Snow.SetActive(false);
+            SnowTrailL.SetActive(false);
+            SnowTrailR.SetActive(false);
+            saltando = true;
+            rb.linearVelocityX = 0;
+            box.enabled = false;
+            prota.DOScale(2, salto).OnComplete(() =>
+            {
+                prota.DOScale(1, salto).OnComplete(() =>
+                {
+                    box.enabled = true;
+                    rb.linearVelocityX = velocidad;
+                    saltando = false;
+                    Snow.SetActive(true);
+                    SnowTrailL.SetActive(true);
+                    SnowTrailR.SetActive(true);
+
+                });
+                
+            });
+
+            sombra.DOScale(1, salto).OnComplete(() =>
+            {
+                sombra.DOScale(1, salto);
+            });
+            sombra.DOMoveY(-1, salto).OnComplete(() =>
+            {
+                sombra.DOMoveY(+3, salto);
+            });
+
+        }
+
     }
+
+
 
 
 
@@ -133,7 +178,7 @@ public class Player : MonoBehaviour
 
     private void ScreenBordersMovement()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && saltando == false)
         {
             float touchSceenPosition = Input.touches[0].position.x;
             float screenCenter = Screen.width / 2;

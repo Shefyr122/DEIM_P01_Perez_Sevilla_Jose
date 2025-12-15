@@ -6,16 +6,37 @@ using UnityEngine.UI;
 public class SceneManeger : MonoBehaviour
 {
 
+    public RectTransform titulo;
+    public Ease tituloease;
+
     public RectTransform startButton;
     public Ease startButtonEase;
+
+    public RectTransform startButton2;
+    public Ease startButtonEase2;
     public Image fadeScreen;
+
+    public int tiempoAparicion;
 
     private void Start()
     {
-        startButton.DOScale(20, 2).SetEase(startButtonEase).OnComplete(() =>
+        titulo.DOScale(10, tiempoAparicion).SetEase(tituloease).OnComplete(() =>
         {
-            startButton.DOShakePosition(1, 100, vibrato:100).SetLoops(-1);
+            titulo.DOShakePosition(1, 20, vibrato: 20).SetLoops(-1);
+
+            startButton.DOScale(10, tiempoAparicion).SetEase(startButtonEase).OnComplete(() =>
+            {
+                startButton.DOShakePosition(1, 20, vibrato: 20).SetLoops(-1);
+
+                startButton2.DOScale(10, tiempoAparicion).SetEase(startButtonEase2).OnComplete(() =>
+                {
+                    startButton2.DOShakePosition(1, 20, vibrato: 20).SetLoops(-1);
+                });
+            });
+
         });
+
+        
     }
 
     public void Jugar()
